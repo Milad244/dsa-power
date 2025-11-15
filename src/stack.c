@@ -26,3 +26,14 @@ bool stack_isEmpty(Stack_t* s) {
     if (s == NULL || s->list == NULL || s->list->head == NULL) return true;
     return false;
 }
+
+// Frees the entire stack
+void free_stack(Stack_t* s) {
+    if (s == NULL) return;
+
+    while (stack_isEmpty(s) == 0) {
+        pop(s);
+    }
+
+    free(s);
+}

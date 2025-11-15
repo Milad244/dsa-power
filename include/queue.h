@@ -21,4 +21,7 @@ int dequeue(queue_t* q);
 // Checks if the queue is empty
 bool queue_isEmpty(queue_t* q);
 
+// Frees the entire queue
+void free_queue(queue_t* q);
+
 #endif // QUEUE_H

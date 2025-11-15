@@ -21,4 +21,7 @@ int pop(Stack_t* s);
 // Returns true if the stack is empty
 bool stack_isEmpty(Stack_t* s);
 
+// Frees the entire stack
+void free_stack(Stack_t* s);
+
 #endif // STACK_H

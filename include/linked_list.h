@@ -17,4 +17,7 @@ void add_to_tail(LL_t* list, int item);
 int remove_from_head(LL_t* list);
 int remove_from_tail(LL_t* list);
 
+// Free the whole linked list
+void free_linked_list(LL_t* list);
+
 #endif // LINKED_LIST_H

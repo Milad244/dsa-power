@@ -17,11 +17,14 @@ typedef struct DLL {
     dnode_t* tail;
 } DLL_t;
 
-// Function signatures
+// Doubly linked list core operations
 DLL_t* create_DLL(void);
 void add_to_front(DLL_t* list, int item);
 void add_to_end(DLL_t* list, int item);
 int remove_from_front(DLL_t* list);
 int remove_from_end(DLL_t* list);
+
+// Frees the entire doubly linked list
+void free_DLL(DLL_t* list);
 
 #endif // DOUBLY_LINKED_LIST_H

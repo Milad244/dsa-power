@@ -4,6 +4,7 @@
 #include "../include/stack.h"
 #include "../include/queue.h"
 #include "../include/search_sort.h"
+#include "../include/binary_tree.h"
 
 int main() {
     // ----------------------------
@@ -41,6 +42,38 @@ int main() {
     enqueue(q, 200);
     printf("Dequeued from queue: %d\n", dequeue(q));
     printf("Queue empty? %s\n", queue_isEmpty(q) ? "Yes" : "No");
+
+    // ----------------------------
+    // Binary Tree
+    // ----------------------------
+    BinaryTree_t* tree = create_binary_tree();
+    BTNode_t* root = create_node(10);
+    tree->root = root;
+
+    BTNode_t* left = create_node(5);
+    BTNode_t* right = create_node(15);
+
+    insert_left(root, left);
+    insert_right(root, right);
+
+    printf("Inorder traversal: ");
+    inorder_traversal(tree->root);
+    printf("\n");
+
+    printf("Preorder traversal: ");
+    preorder_traversal(tree->root);
+    printf("\n");
+
+    printf("Postorder traversal: ");
+    postorder_traversal(tree->root);
+    printf("\n");
+
+    // Free all structures
+    free_linked_list(ll);
+    free_DLL(dll);
+    free_stack(s);
+    free_queue(q);
+    free_tree(tree);
 
     // ----------------------------
     // Sorting / Algorithms

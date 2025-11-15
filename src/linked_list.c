@@ -84,6 +84,19 @@ int remove_from_tail(LL_t* list) {
     return data;
 }
 
+// Frees the entire linked list
+void free_linked_list(LL_t* list) {
+    if (list == NULL) return;
+
+    node_t* node = list->head;
+    while (node != NULL) {
+        node_t* tmp = node;
+        node = node->next;
+        free(tmp);
+    }
+    free(list);
+}
+
 /* This was code for linked_list without tail
 LL_t* create_linked_list(void) {
     LL_t* list = (LL_t*) malloc(sizeof(LL_t));

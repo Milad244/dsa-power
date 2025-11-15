@@ -10,13 +10,13 @@ It includes:
 This repository is designed for practicing and understanding fundamental concepts in data structures and algorithms.
 
 ## Status
-2025-11-13 - present.
+Ongoing. 2025-11-13 to present.
 
 ## Resources Used
 - C
 
 ## Usage
-1. Clone the repository: `git clone https://github.com/Milad244/dsa-power && cd dsa-power`  
+1. Clone the repository: `git clone https://github.com/Milad244/dsa-power` && `cd dsa-power`  
 2. Build the project using the provided Makefile: `make`  
 3. Run the executable: `./main`  
 4. Clean build artifacts if needed: `make clean`

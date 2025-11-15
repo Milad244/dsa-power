@@ -90,3 +90,17 @@ int remove_from_end(DLL_t* list) {
     free(node);
     return data;
 }
+
+// Frees the entire doubly linked list
+void free_DLL(DLL_t* list) {
+    if (list == NULL) return;
+
+    dnode_t* node = list->head;
+    while (node != NULL) {
+        dnode_t* tmp = node;
+        node = node->next;
+        free(tmp);
+    }
+    
+    free(list);
+}

@@ -26,3 +26,14 @@ bool queue_isEmpty(queue_t* q) {
     if (q == NULL || q->list == NULL || q->list->head == NULL) return true;
     return false;
 }
+
+// Frees the entire queue
+void free_queue(queue_t* q) {
+    if (q == NULL) return;
+
+    while (queue_isEmpty(q) == 0) {
+        dequeue(q);
+    }
+    
+    free(q);
+}

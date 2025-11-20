@@ -62,11 +62,11 @@ int rec2_binary_search(const int* arr, int n, int item) {
         return rec2_binary_search(arr, mid, item);
     }
     else {
-        int i = rec2_binary_search(arr+mid+1, n-mid-1, item);
+        int i = rec2_binary_search(arr + mid + 1, n - mid - 1, item);
         if (i == -1)
             return -1;
         else
-            return mid+1+i;
+            return mid + 1 + i;
     }
 }
 
@@ -113,23 +113,26 @@ void merge(int* ar, int n, int mid) {
     i++;
   }
   
-  while (i < n) { // If remaining side, it needs to be added
-    if (left < mid) {
+    // If remaining side, it needs to be added
+    while (left < mid) {
         sorted[i] = ar[left];
         left++;
-    } else {
+        i++;
+    } 
+    
+    while (right < n) {
         sorted[i] = ar[right];
         right++;
+        i++;
     }
-    i++;
-  }
+    
   
     for (int k = 0; k < n; k++) { // Copying sorted to original
         ar[k] = sorted[k];
     }
+    
     free(sorted);
 }
-
 
 void merge_sort(int* ar, int n) {
     if (n <= 1) return; // Base case

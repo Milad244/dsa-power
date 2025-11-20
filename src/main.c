@@ -91,7 +91,6 @@ int main() {
     for (int i = 0; i < n; i++) printf("%d ", arr[i]);
     printf("\n");
 
-    // Searching example
     int target = 8;
     int index = linear_search(arr, n, target);
     printf("Linear search for %d: %d\n", target, index);

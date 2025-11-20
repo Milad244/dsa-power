@@ -36,11 +36,13 @@ void insert_right(BTNode_t* parent, BTNode_t* child);
 // Tree checks
 bool tree_is_empty(BinaryTree_t* tree);
 bool is_leaf(BTNode_t* node);
+bool are_equal(BTNode_t* root1, BTNode_t* root2);
 
 // Tree metrics
 int tree_height(BTNode_t* root);
 int count_nodes(BTNode_t* root);
 int node_depth(BTNode_t* node);
+int count_leaves(BTNode_t* root);
 
 // Relationship helpers
 bool is_descendant(BTNode_t* ancestor, BTNode_t* node);
@@ -53,6 +55,9 @@ BTNode_t* tree_search(BTNode_t* root, int target);
 
 // Computes distance between two nodes in the tree
 int node_distance(BTNode_t* node1, BTNode_t* node2);
+
+// Create array from binary tree
+int* inorder_to_array(BTNode_t* root); // Not doing others because same logic
 
 // Reconstructs a binary tree from given traversal arrays
 BinaryTree_t* reconstruct_tree_from_pre_in(int* preorder, int* inorder, int n);

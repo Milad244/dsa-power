@@ -9,8 +9,8 @@ typedef struct Queue {
     LL_t* list;
 } queue_t;
 
-// Creates a new empty queue
-queue_t* create_queue(void);
+// Creates a new queue
+queue_t* queue_create(void);
 
 // Enqueues an item to the back of the queue
 void enqueue(queue_t* q, int item);
@@ -19,9 +19,15 @@ void enqueue(queue_t* q, int item);
 int dequeue(queue_t* q);
 
 // Checks if the queue is empty
-bool queue_isEmpty(queue_t* q);
+bool queue_is_empty(queue_t* q);
+
+// Returns the number of items in queue (0 if NULL)
+int queue_size(queue_t* q);
+
+// Checks if two queues are equal
+bool queue_equal(queue_t* q1, queue_t* q2);
 
 // Frees the entire queue
-void free_queue(queue_t* q);
+void queue_free(queue_t* q);
 
 #endif // QUEUE_H

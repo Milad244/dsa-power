@@ -4,7 +4,7 @@
 DSA Power is a collection of my own implementations of core data structures and algorithms in C.
 It includes:
 
-- **Data Structures:** Singly Linked List, Doubly Linked List, Stack, Queue, Binary Tree, Binary Search Tree
+- **Data Structures:** VLA, Singly Linked List, Doubly Linked List, Stack, Queue, Binary Tree, Binary Search Tree
 - **Algorithms:** Sorting (Selection, Bubble, Insertion, Merge, Quick), Searching (Linear, Binary)
 
 This repository is designed for practicing and understanding fundamental concepts in data structures and algorithms.

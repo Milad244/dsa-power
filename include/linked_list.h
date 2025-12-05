@@ -10,14 +10,22 @@ typedef struct LL {
     node_t* tail;
 } LL_t;
 
-// Function signatures
-LL_t* create_linked_list(void);
-void add_to_head(LL_t* list, int item);
-void add_to_tail(LL_t* list, int item);
-int remove_from_head(LL_t* list);
-int remove_from_tail(LL_t* list);
+// Creates a new Linked List
+LL_t* LL_create(void);
 
-// Free the whole linked list
-void free_linked_list(LL_t* list);
+// Adds a new element at the head of the list
+void LL_add_to_head(LL_t* list, int item);
+
+// Adds a new element at the tail of the list
+void LL_add_to_tail(LL_t* list, int item);
+
+// Removes the head element and returns its value (-1 if empty)
+int LL_remove_from_head(LL_t* list);
+
+// Removes the tail element and returns its value (-1 if empty)
+int LL_remove_from_tail(LL_t* list);
+
+// Frees the entire linked list
+void LL_free(LL_t* list);
 
 #endif // LINKED_LIST_H

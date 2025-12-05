@@ -1,8 +1,7 @@
 #include "../include/linked_list.h"
 #include <stdlib.h>
 
-// Creates a new empty linked list
-LL_t* create_linked_list(void) {
+LL_t* LL_create(void) {
     LL_t* list = (LL_t*) malloc(sizeof(LL_t));
     if (list == NULL) return NULL;
 
@@ -11,8 +10,7 @@ LL_t* create_linked_list(void) {
     return list;
 }
 
-// Adds a new element at the head of the list
-void add_to_head(LL_t* list, int item) {
+void LL_add_to_head(LL_t* list, int item) {
     if (list == NULL) return;
 
     node_t* node = (node_t*) malloc(sizeof(node_t));
@@ -28,8 +26,7 @@ void add_to_head(LL_t* list, int item) {
     }
 }
 
-// Adds a new element at the tail of the list
-void add_to_tail(LL_t* list, int item) {
+void LL_add_to_tail(LL_t* list, int item) {
     if (list == NULL) return;
 
     node_t* node = (node_t*) malloc(sizeof(node_t));
@@ -45,8 +42,7 @@ void add_to_tail(LL_t* list, int item) {
     }
 }
 
-// Removes the head element and returns its value (-1 if empty)
-int remove_from_head(LL_t* list) {
+int LL_remove_from_head(LL_t* list) {
     if (list == NULL || list->head == NULL) return -1;
     
     node_t* node = list->head;
@@ -57,8 +53,7 @@ int remove_from_head(LL_t* list) {
     return data;
 }
 
-// Removes the tail element and returns its value (-1 if empty)
-int remove_from_tail(LL_t* list) {
+int LL_remove_from_tail(LL_t* list) {
     if (list == NULL || list->tail == NULL) return -1;
 
     // Handling 1 item edge case
@@ -84,8 +79,7 @@ int remove_from_tail(LL_t* list) {
     return data;
 }
 
-// Frees the entire linked list
-void free_linked_list(LL_t* list) {
+void LL_free(LL_t* list) {
     if (list == NULL) return;
 
     node_t* node = list->head;
@@ -96,76 +90,3 @@ void free_linked_list(LL_t* list) {
     }
     free(list);
 }
-
-/* This was code for linked_list without tail
-LL_t* create_linked_list(void) {
-    LL_t* list = (LL_t*) malloc(sizeof(LL_t));
-    if (list == NULL) return NULL;
-
-    list->head = NULL;
-    return list;
-}
-
-void add_to_head(LL_t* list, int item) {
-    if (list == NULL) return;
-
-    node_t* node = (node_t*) malloc(sizeof(node_t));
-    if (node == NULL) return;
-
-    node->data = item;
-    node->next = list->head; // New node points to old head
-    list->head = node; // New node becomes head
-}
-
-void add_to_tail(LL_t* list, int item) {
-    if (list == NULL) return;
-
-    node_t* node = (node_t*) malloc(sizeof(node_t));
-    if (node == NULL) return;
-    node->data = item;
-    node->next = NULL;
-
-    node_t* curr = list->head;
-    if (curr == NULL) {
-        list->head = node;
-        return;
-    }
-    while (curr->next != NULL) curr = curr->next;
-    curr->next = node;
-}
-
-int remove_from_head(LL_t* list) {
-    if (list == NULL || list->head == NULL) return -1;
-
-    node_t* tmp = list->head;
-    list->head = list->head->next;
-    int data = tmp->data;
-    free(tmp);
-    return data;
-}
-
-int remove_from_tail(LL_t* list) {
-    if (list == NULL || list->head == NULL) return -1;
-
-    // If only 1 element
-    if (list->head->next == NULL) {
-        node_t* node = list->head;
-        int data = node->data;
-        list->head = NULL;
-        free(node);
-        return data;
-    }
-
-    // Otherwise going to the last element
-    node_t* prev = list->head;
-    node_t* curr = prev->next;
-    while (curr->next != NULL) {
-        prev = curr;
-        curr = curr->next;
-    }
-    prev->next = NULL;
-    int data = curr->data;
-    free(curr);
-    return data;
-}
-*/

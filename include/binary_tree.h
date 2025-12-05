@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-// Node for binary tree
+// Node for binary trees
 typedef struct BTNode {
     int data;
     struct BTNode* parent;
@@ -16,55 +16,63 @@ typedef struct BinaryTree {
     BTNode_t* root;
 } BinaryTree_t;
 
-// Creates a new empty binary tree
-BinaryTree_t* create_binary_tree(void);
+// Creates a new binary tree
+BinaryTree_t* bt_create(void);
 
 // Creates a new node with given value
-BTNode_t* create_node(int item);
+BTNode_t* node_create(int item);
 
 // Traversal functions
-void inorder_traversal(BTNode_t* root);
-void preorder_traversal(BTNode_t* root);
-void postorder_traversal(BTNode_t* root);
-void dfs_traversal(BTNode_t* root); // general DFS (preorder by default)
-void bfs_traversal(BTNode_t* root);
+
+void node_inorder_traversal(BTNode_t* root);
+void node_preorder_traversal(BTNode_t* root);
+void node_postorder_traversal(BTNode_t* root);
+void node_dfs_traversal(BTNode_t* root); // DFS (preorder)
+void node_bfs_traversal(BTNode_t* root); // BFS (level-order)
 
 // Insert child nodes
-void insert_left(BTNode_t* parent, BTNode_t* child);
-void insert_right(BTNode_t* parent, BTNode_t* child);
 
-// Tree checks
-bool tree_is_empty(BinaryTree_t* tree);
-bool is_leaf(BTNode_t* node);
-bool are_equal(BTNode_t* root1, BTNode_t* root2);
+void node_insert_left(BTNode_t* parent, BTNode_t* child);
+void node_insert_right(BTNode_t* parent, BTNode_t* child);
 
-// Tree metrics
-int tree_height(BTNode_t* root);
-int count_nodes(BTNode_t* root);
+// Checks
+
+bool bt_is_empty(BinaryTree_t* tree);
+bool node_is_leaf(BTNode_t* node);
+bool node_are_equal(BTNode_t* root1, BTNode_t* root2);
+
+// Metrics
+
+int node_height(BTNode_t* root);
+int node_count(BTNode_t* root);
 int node_depth(BTNode_t* node);
-int count_leaves(BTNode_t* root);
+int node_leaves_count(BTNode_t* root);
 
 // Relationship helpers
-bool is_descendant(BTNode_t* ancestor, BTNode_t* node);
-bool is_ancestor(BTNode_t* node, BTNode_t* potential_ancestor);
-BTNode_t* get_sibling(BTNode_t* node);
-BTNode_t* get_uncle(BTNode_t* node);
 
-// Search
-BTNode_t* tree_search(BTNode_t* root, int target);
+bool node_is_descendant(BTNode_t* ancestor, BTNode_t* node);
+bool node_is_ancestor(BTNode_t* node, BTNode_t* potential_ancestor);
+BTNode_t* node_get_sibling(BTNode_t* node);
+BTNode_t* node_get_uncle(BTNode_t* node);
 
-// Computes distance between two nodes in the tree
+// Searching and distances
+
+BTNode_t* bt_search(BTNode_t* root, int target);
 int node_distance(BTNode_t* node1, BTNode_t* node2);
+BTNode_t* node_next_inorder(BTNode_t* node);
 
-// Create array from binary tree
-int* inorder_to_array(BTNode_t* root); // Not doing others because same logic
+// Creates inorder array from binary tree
+int* node_inorder_to_array(BTNode_t* root);
+// Not doing others because same logic
 
 // Reconstructs a binary tree from given traversal arrays
-BinaryTree_t* reconstruct_tree_from_pre_in(int* preorder, int* inorder, int n);
-BinaryTree_t* reconstruct_tree_from_post_in(int* postorder, int* inorder, int n);
+
+BinaryTree_t* bt_reconstruct_from_pre_in(int* preorder, int* inorder, int n);
+BinaryTree_t* bt_reconstruct_from_post_in(int* postorder, int* inorder, int n);
 
 // Freeing memory
-void free_subtree(BTNode_t* root);
-void free_tree(BinaryTree_t* tree);
+
+void node_free_subtree(BTNode_t* root);
+void bt_free(BinaryTree_t* tree);
 
 #endif // BINARY_TREE_H

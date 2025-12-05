@@ -5,7 +5,8 @@
 
 // https://piazza.com/class/mc1b0dusddf1xw/post/39#
 
-// Utility  
+// Utility
+
 void print_ar(const int* ar, int n) {
     for (int i = 0; i < n; i++) {
         printf("%d ", ar[i]);
@@ -14,6 +15,7 @@ void print_ar(const int* ar, int n) {
 }
 
 // Searching
+
 int linear_search(const int* ar, int n, int target) {
     for (int i = 0; i < n; i++) {
         if (ar[i] == target) return i;
@@ -71,6 +73,7 @@ int rec2_binary_search(const int* arr, int n, int item) {
 }
 
 // Sorting
+
 void selection_sort(int* nums, int n) {
     // We find the smallest and swap it with i
     for (int i = 0; i < n - 1; i++) {

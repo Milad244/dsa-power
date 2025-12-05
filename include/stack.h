@@ -9,19 +9,19 @@ typedef struct stack {
     LL_t* list;
 } Stack_t;
 
-// Creates a new empty stack
-Stack_t* create_stack(void);
+// Creates a new stack
+Stack_t* stack_create(void);
 
 // Pushes an item onto the stack
-void push(Stack_t* s, int item);
+void stack_push(Stack_t* s, int item);
 
 // Pops the top item off the stack and returns it (-1 if empty)
-int pop(Stack_t* s);
+int stack_pop(Stack_t* s);
 
 // Returns true if the stack is empty
-bool stack_isEmpty(Stack_t* s);
+bool stack_is_empty(Stack_t* s);
 
 // Frees the entire stack
-void free_stack(Stack_t* s);
+void stack_free(Stack_t* s);
 
 #endif // STACK_H

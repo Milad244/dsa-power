@@ -1,8 +1,7 @@
 #include "../include/doubly_linked_list.h"
 #include <stdlib.h>
 
-// Creates a new empty doubly-linked list
-DLL_t* create_DLL(void) {
+DLL_t* DLL_create(void) {
     DLL_t* list = (DLL_t*) malloc(sizeof(DLL_t));
     if (list == NULL) return NULL;
 
@@ -11,8 +10,7 @@ DLL_t* create_DLL(void) {
     return list;
 }
 
-// Adds a new element at the front of the list
-void add_to_front(DLL_t* list, int item) {
+void DLL_add_to_front(DLL_t* list, int item) {
     if (list == NULL) return;
 
     dnode_t* node = (dnode_t*) malloc(sizeof(dnode_t));
@@ -32,8 +30,7 @@ void add_to_front(DLL_t* list, int item) {
     }
 }
 
-// Adds a new element at the end of the list
-void add_to_end(DLL_t* list, int item) {
+void DLL_add_to_end(DLL_t* list, int item) {
     if (list == NULL) return;
 
     dnode_t* node = (dnode_t*) malloc(sizeof(dnode_t));
@@ -53,8 +50,7 @@ void add_to_end(DLL_t* list, int item) {
     }
 }
 
-// Removes the front element and returns its value (-1 if empty)
-int remove_from_front(DLL_t* list) {
+int DLL_remove_from_front(DLL_t* list) {
     if (list == NULL || list->head == NULL) return -1;
     
     dnode_t* node = list->head;
@@ -72,8 +68,7 @@ int remove_from_front(DLL_t* list) {
     return data;
 }
 
-// Removes the end element and returns its value (-1 if empty)
-int remove_from_end(DLL_t* list) {
+int DLL_remove_from_end(DLL_t* list) {
     if (list == NULL || list->tail == NULL) return -1;
     
     dnode_t* node = list->tail;
@@ -91,8 +86,7 @@ int remove_from_end(DLL_t* list) {
     return data;
 }
 
-// Frees the entire doubly linked list
-void free_DLL(DLL_t* list) {
+void DLL_free(DLL_t* list) {
     if (list == NULL) return;
 
     dnode_t* node = list->head;

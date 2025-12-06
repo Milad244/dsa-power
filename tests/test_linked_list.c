@@ -23,7 +23,21 @@ int clean_suite(void) {
     return 0;
 }
 
-void assert_list_equals(LL_t* list, int expected[], int n); // TODO
+// Helper to assert the list matches an expected array
+static void assert_list_equals(LL_t* list, int expected[], int n) {
+    CU_ASSERT_PTR_NOT_NULL_FATAL(list);
+    node_t* curr = list->head;
+    for (int i = 0; i < n; i++) {
+        CU_ASSERT_PTR_NOT_NULL_FATAL(curr);
+        CU_ASSERT_EQUAL(curr->data, expected[i]);
+        if (i == n - 1) { // last item
+            CU_ASSERT_PTR_EQUAL(curr, list->tail);
+            CU_ASSERT_PTR_NULL(curr->next);
+        }
+        curr = curr->next;
+    }
+    CU_ASSERT_PTR_NULL(curr); // needed for n = 0, list > 0 edge case
+}
 
 void test_create(void) {
     LL_t* list = make_list_with_n(0);
@@ -35,29 +49,49 @@ void test_create(void) {
     LL_free(list);
 }
 
-void test_add_to_head(void) { // TODO: Separate tests more and make equals using assert_list_equals
-    // Adding into empty
+void test_add_to_head_empty(void) {
     LL_t* empty = make_list_with_n(0);
     LL_add_to_head(empty, -8);
-    node_t* added = empty->head;
-    CU_ASSERT_PTR_NOT_NULL_FATAL(added);
-    CU_ASSERT_EQUAL(added->data, -8);
-    CU_ASSERT_PTR_EQUAL(added, empty->tail); // First element should be both the head and tail
-    LL_free(empty);
 
-    // Adding into non-empty
+    int expected[] = {-8};
+    assert_list_equals(empty, expected, 1);
+
+    LL_free(empty);
+}
+
+void test_add_to_head_non_empty(void) {
     LL_t* three = make_list_with_n(0);
     LL_add_to_head(three, -3);
     LL_add_to_head(three, 0);
     LL_add_to_head(three, 3);
-    // List should be 3 -> 0 -> -3
-    added = three->head;
-    CU_ASSERT_PTR_NOT_NULL_FATAL(added);
-    CU_ASSERT_EQUAL(added->data, 3);
-    CU_ASSERT_EQUAL(added->next->data, 0);
-    CU_ASSERT_EQUAL(added->next->next->data, -3);
-    CU_ASSERT_PTR_EQUAL(added->next->next, three->tail);
+
+    int expected[] = {3, 0, -3};
+    assert_list_equals(three, expected, 3);
+
     LL_free(three);
+}
+
+void test_add_to_tail_empty(void) {
+    LL_t* empty = make_list_with_n(0);
+    LL_add_to_tail(empty, 1234);
+
+    int expected[] = {1234};
+    assert_list_equals(empty, expected, 1);
+
+    LL_free(empty);
+}
+
+void test_add_to_tail_non_empty(void) {
+    LL_t* four = make_list_with_n(0);
+    LL_add_to_tail(four, 0);
+    LL_add_to_tail(four, 99);
+    LL_add_to_tail(four, -123);
+    LL_add_to_tail(four, 1);
+
+    int expected[] = {0, 99, -123, 1};
+    assert_list_equals(four, expected, 4);
+
+    LL_free(four);
 }
 
 int main(void) {
@@ -75,7 +109,10 @@ int main(void) {
 
     /* Add tests to the suite */
     CU_add_test(suite, "test_create", test_create);
-    CU_add_test(suite, "test_add_to_head", test_add_to_head);
+    CU_add_test(suite, "test_add_to_head_empty", test_add_to_head_empty);
+    CU_add_test(suite, "test_add_to_head_non_empty", test_add_to_head_non_empty);
+    CU_add_test(suite, "test_add_to_tail_empty", test_add_to_tail_empty);
+    CU_add_test(suite, "test_add_to_tail_non_empty", test_add_to_tail_non_empty);
 
     /* Run the tests */
     CU_basic_run_tests();

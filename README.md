@@ -5,10 +5,22 @@ DSA Power is a collection of my own implementations of core data structures and 
 I developed this project to practice and deeply understand fundamental concepts in data structures and algorithms.
 I also added rigorous unit testing to gain experience creating DRY tests and to overcome my mental block with testing large programs.
 Most importantly, this project is designed for first-year CS students who want a beginner-friendly and readable program containing all the data structures they will learn. If you are learning DSA, I highly recommend trying to implement the functions yourself and using my test cases to help verify your solutions.
-It includes:
 
-- **Data Structures:** VLA, Singly Linked List, Doubly Linked List, Stack, Queue, Binary Tree, Binary Search Tree
-- **Algorithms:** Sorting (Selection, Bubble, Insertion, Merge, Quick), Searching (Linear, Binary)
+This project covers:
+
+- **Data Structures:**
+  - VLA (Variable-Length Array)
+  - Singly Linked List
+  - Doubly Linked List
+  - Stack
+  - Queue
+  - Binary Tree
+  - Binary Search Tree
+
+- **Algorithms:**
+  - Sorting: Selection, Bubble, Insertion, Merge, Quick
+  - Searching: Linear, Binary
+  - Additional utility algorithms included with each data structure, such as node_distance and traversal functions
 
 ## Status
 Ongoing. 2025-11-13 to present.

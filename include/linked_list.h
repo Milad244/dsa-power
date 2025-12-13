@@ -2,6 +2,7 @@
 #define LINKED_LIST_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include "node.h"
 
 // Linked list definition
@@ -26,7 +27,7 @@ int LL_remove_from_head(LL_t* list);
 int LL_remove_from_tail(LL_t* list);
 
 // Gets the size of the list (0 if null)
-int LL_get_size(LL_t* list);
+size_t LL_get_size(LL_t* list);
 
 // Checks if two lists are equal
 bool LL_are_equal(LL_t* list1, LL_t* list2);

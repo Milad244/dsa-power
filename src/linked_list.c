@@ -79,10 +79,10 @@ int LL_remove_from_tail(LL_t* list) {
     return data;
 }
 
-int LL_get_size(LL_t* list) {
+size_t LL_get_size(LL_t* list) {
     if (list == NULL) return 0;
 
-    int size = 0;
+    size_t size = 0;
     node_t* curr = list->head;
     while (curr != NULL) {
         size++;

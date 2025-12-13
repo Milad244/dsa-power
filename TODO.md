@@ -2,6 +2,7 @@
 
 ## TODO
 - [ ] Finish LL tests
+- [ ] Make sure all get size or len functions return size_t and not int
 - [ ] Add size method in LL
 - [ ] Implement VLA and use it to make bfs and dfs
 - [ ] Separate node functions from BT (maybe)

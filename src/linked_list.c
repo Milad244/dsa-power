@@ -79,6 +79,34 @@ int LL_remove_from_tail(LL_t* list) {
     return data;
 }
 
+int LL_get_size(LL_t* list) {
+    if (list == NULL) return 0;
+
+    int size = 0;
+    node_t* curr = list->head;
+    while (curr != NULL) {
+        size++;
+        curr = curr->next;
+    }
+    
+    return size;
+}
+
+bool LL_are_equal(LL_t* list1, LL_t* list2) {
+    if (list1 == list2) return true;
+    if (list1 == NULL || list2 == NULL) return false;
+
+    node_t* curr1 = list1->head, *curr2 = list2->head;
+    while (curr1 != NULL && curr2 != NULL) {
+        if (curr1->data != curr2->data) return false;
+        curr1 = curr1->next;
+        curr2 = curr2->next;
+    }
+    
+    if (curr1 != NULL || curr2 != NULL) return false; // one isn't empty
+    return true; // both empty so equal
+}
+
 void LL_free(LL_t* list) {
     if (list == NULL) return;
 

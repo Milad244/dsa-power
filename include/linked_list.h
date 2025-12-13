@@ -25,6 +25,12 @@ int LL_remove_from_head(LL_t* list);
 // Removes the tail element and returns its value (-1 if empty)
 int LL_remove_from_tail(LL_t* list);
 
+// Gets the size of the list (0 if null)
+int LL_get_size(LL_t* list);
+
+// Checks if two lists are equal
+bool LL_are_equal(LL_t* list1, LL_t* list2);
+
 // Frees the entire linked list
 void LL_free(LL_t* list);
 

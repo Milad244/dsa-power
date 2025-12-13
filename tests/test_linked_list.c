@@ -2,24 +2,20 @@
 #include <CUnit/CUnit.h>
 #include <linked_list.h>
 
-LL_t* shared_list;
-
+// makes list with n items of value 0, 1, 2, ..., n - 1
 static LL_t* make_list_with_n(int n) {
     LL_t* list = LL_create();
     for (int i = 0; i < n; i++) {
-        LL_add_to_head(list, i);
+        LL_add_to_tail(list, i);
     }
     return list;
 }
 
 int init_suite(void) {
-    shared_list = make_list_with_n(5);
-    if (shared_list == NULL) return -1;
     return 0;
 }
 
 int clean_suite(void) {
-    LL_free(shared_list);
     return 0;
 }
 
@@ -49,14 +45,20 @@ void test_create(void) {
     LL_free(list);
 }
 
+void test_add_to_head_null(void) {
+    LL_t* null_list = NULL;
+    LL_add_to_head(null_list, 5);
+    CU_ASSERT_TRUE(1);
+}
+
 void test_add_to_head_empty(void) {
-    LL_t* empty = make_list_with_n(0);
-    LL_add_to_head(empty, -8);
+    LL_t* list = make_list_with_n(0);
+    LL_add_to_head(list, -8);
 
     int expected[] = {-8};
-    assert_list_equals(empty, expected, 1);
+    assert_list_equals(list, expected, 1);
 
-    LL_free(empty);
+    LL_free(list);
 }
 
 void test_add_to_head_non_empty(void) {
@@ -71,14 +73,20 @@ void test_add_to_head_non_empty(void) {
     LL_free(three);
 }
 
+void test_add_to_tail_null(void) {
+    LL_t* null_list = NULL;
+    LL_add_to_tail(null_list, 5);
+    CU_ASSERT_TRUE(1);
+}
+
 void test_add_to_tail_empty(void) {
-    LL_t* empty = make_list_with_n(0);
-    LL_add_to_tail(empty, 1234);
+    LL_t* list = make_list_with_n(0);
+    LL_add_to_tail(list, 1234);
 
     int expected[] = {1234};
-    assert_list_equals(empty, expected, 1);
+    assert_list_equals(list, expected, 1);
 
-    LL_free(empty);
+    LL_free(list);
 }
 
 void test_add_to_tail_non_empty(void) {
@@ -92,6 +100,42 @@ void test_add_to_tail_non_empty(void) {
     assert_list_equals(four, expected, 4);
 
     LL_free(four);
+}
+
+void test_remove_from_head_null(void) {
+    LL_t* null_list = NULL;
+    LL_remove_from_head(null_list);
+    CU_ASSERT_TRUE(1);
+}
+
+void test_remove_from_head_empty(void) {
+    LL_t* empty = make_list_with_n(0);
+    LL_remove_from_head(empty);
+
+    int expected[] = {};
+    assert_list_equals(empty, expected, 0);
+
+    LL_free(empty);
+}
+
+void test_remove_from_head_single(void) {
+    LL_t* list = make_list_with_n(1);
+    LL_remove_from_head(list);
+
+    CU_ASSERT_PTR_NULL(list->head);
+    CU_ASSERT_PTR_NULL(list->tail);
+
+    LL_free(list);
+}
+
+void test_remove_from_head_multiple(void) {
+    LL_t* list = make_list_with_n(8);
+    LL_remove_from_head(list);
+
+    int expected[] = {1, 2, 3, 4, 5, 6, 7};
+    assert_list_equals(list, expected, 7);
+
+    LL_free(list);
 }
 
 int main(void) {
@@ -109,10 +153,19 @@ int main(void) {
 
     /* Add tests to the suite */
     CU_add_test(suite, "test_create", test_create);
+
+    CU_add_test(suite, "test_add_to_head_null", test_add_to_head_null);
     CU_add_test(suite, "test_add_to_head_empty", test_add_to_head_empty);
     CU_add_test(suite, "test_add_to_head_non_empty", test_add_to_head_non_empty);
+
+    CU_add_test(suite, "test_add_to_tail_null", test_add_to_tail_null);
     CU_add_test(suite, "test_add_to_tail_empty", test_add_to_tail_empty);
     CU_add_test(suite, "test_add_to_tail_non_empty", test_add_to_tail_non_empty);
+
+    CU_add_test(suite, "test_remove_from_head_null", test_remove_from_head_null);
+    CU_add_test(suite, "test_remove_from_head_empty", test_remove_from_head_empty);
+    CU_add_test(suite, "test_remove_from_head_single", test_remove_from_head_single);
+    CU_add_test(suite, "test_remove_from_head_multiple", test_remove_from_head_multiple);
 
     /* Run the tests */
     CU_basic_run_tests();

@@ -2,7 +2,6 @@
 
 ## TODO
 - [ ] Finish LL tests
-- [ ] Add size method in LL
 - [ ] Implement VLA and use it to make bfs and dfs
 - [ ] Separate node functions from BT (maybe)
 
@@ -11,3 +10,4 @@
 - [x] Rewrite descriptions for methods to be more helpful and only keep implementation comments in .c, rest in .h
 - [x] Implement BST
 - [x] Add CUnit tests
+- [x] Add size method in LL

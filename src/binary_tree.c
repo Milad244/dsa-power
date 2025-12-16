@@ -209,6 +209,7 @@ int node_distance(BTNode_t* node1, BTNode_t* node2){
     return dist;
 }
 
+/*
 BTNode_t* node_next_inorder(BTNode_t* node) {
   BTNode_t* parent = node->parent;
   if (parent == NULL) { // Root so we go right then left until null
@@ -241,7 +242,64 @@ BTNode_t* node_next_inorder(BTNode_t* node) {
   // Must be last element
   return NULL;
 }
+*/
+// Doing better versions:
+BTNode_t* node_next_inorder(BTNode_t* node) {
+    if (node == NULL) return NULL;
 
+    BTNode_t* curr;
+    if (node->right != NULL) { // If has right child then go right and then furthest left
+        curr = node->right;
+        while (curr->left != NULL) curr = curr->left;
+        return curr;
+    }
+
+    // Otherwise we go up until curr is the left child as then left child parent is next
+    curr = node;
+    while (curr->parent != NULL && curr->parent->right == curr) curr = curr->parent;
+    return curr->parent;
+}
+
+BTNode_t* node_next_preorder(BTNode_t* node) {
+    if (node == NULL) return NULL;
+
+    if (node->left != NULL) return node->left;
+    if (node->right != NULL) return node->right;
+
+    // We are leaf so climb up to find a parent with unvisited right child
+    BTNode_t* curr = node;
+    while (curr->parent != NULL) {
+        // If we are left child and parent has a right child, return that
+        if (curr->parent->left == curr && curr->parent->right != NULL)
+            return curr->parent->right;
+
+        // Otherwise, keep climbing
+        curr = curr->parent;
+    }
+
+    // Last node in preorder
+    return NULL;
+}
+
+BTNode_t* node_next_postorder(BTNode_t* node) {
+    if (node == NULL) return NULL;
+
+    if (node->parent == NULL) return NULL; // root is last in postorder
+
+    // If node is the left child and parent has a right child, go to leftmost leaf of right subtree
+    BTNode_t* parent = node->parent;
+    if (parent->left == node && parent->right != NULL) {
+        BTNode_t* curr = parent->right;
+        while (curr->left != NULL || curr->right != NULL) {
+            if (curr->left != NULL) curr = curr->left;
+            else curr = curr->right;
+        }
+        return curr;
+    }
+
+    // Otherwise we return parent
+    return parent;
+}
 
 // Helper to fill array recursively inorder
 static void fill_inorder_array(BTNode_t* node, int* arr, int* index) {
@@ -276,8 +334,11 @@ static BTNode_t* build_tree_from_pre_in(int* preorder, int* pre_index, int* inor
     // We go through inorder until reaching the root value
     int node_index = in_start;
     while (node_index <= in_end && inorder[node_index] != root_value) node_index++;
+
     root->left = build_tree_from_pre_in(preorder, pre_index, inorder, in_start, node_index - 1);
+    if (root->left != NULL) root->left->parent = root;
     root->right = build_tree_from_pre_in(preorder, pre_index, inorder, node_index + 1, in_end);
+    if (root->right != NULL) root->right->parent = root;
 
     return root;
 }

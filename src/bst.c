@@ -11,7 +11,7 @@ BST_t* BST_create(void) {
     tree->size = 0;
     return tree;
 }
-
+/*
 void BST_insert(BST_t* tree, int item) {
     if (tree == NULL) return;
     BTNode_t* node = tree->root;
@@ -23,6 +23,30 @@ void BST_insert(BST_t* tree, int item) {
     node = node_create(item);
     tree->size++;
 }
+*/
+void BST_insert(BST_t* tree, int item) {
+    if (tree == NULL) return;
+
+    BTNode_t* parent = NULL;
+    BTNode_t* node = tree->root;
+
+    while (node != NULL) {
+        parent = node;
+        if (node->data == item) return;          // no duplicates
+        else if (item < node->data) node = node->left;
+        else node = node->right;
+    }
+
+    BTNode_t* newNode = node_create(item);
+
+    if (parent == NULL) tree->root = newNode;   // empty tree
+    else if (item < parent->data) parent->left = newNode;
+    else parent->right = newNode;
+    // also make child point to parent
+
+    tree->size++;
+}
+
 
 BTNode_t* BST_search(BST_t* tree, int item) {
     if (tree == NULL) return NULL;
@@ -85,7 +109,7 @@ static void BST_delete_single_child(BST_t* tree, BTNode_t* to_delete) {
 void BST_delete(BST_t* tree, int item) {
     if (tree == NULL) return;
     BTNode_t* to_delete = BST_search(tree, item);
-    if (to_delete == false) return; // No item found to delete
+    if (to_delete == NULL) return; // No item found to delete
     
     if (node_is_leaf(to_delete) == true) { // Has no children
         BST_delete_no_child(to_delete);

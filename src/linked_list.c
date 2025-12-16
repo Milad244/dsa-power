@@ -107,6 +107,66 @@ bool LL_are_equal(LL_t* list1, LL_t* list2) {
     return true; // both empty so equal
 }
 
+void LL_reverse(LL_t* list) {
+    if (list == NULL) return;
+
+    node_t* prev = NULL;
+    node_t* curr = list->head;
+    node_t* next = NULL;
+
+    list->tail = curr;
+    while (curr != NULL) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    list->head = prev;
+}
+
+void LL_map(LL_t* list, int (*map)(int)) {
+    if (list == NULL) return;
+
+    node_t* curr = list->head;
+    while (curr != NULL) {
+        curr->data = map(curr->data);
+        curr = curr->next;
+    }
+}
+
+node_t* LL_get_item(LL_t* list, int index) {
+    if (list == NULL || index < 0) return NULL;
+
+    int count = 0;
+    node_t* curr = list->head;
+    while (curr != NULL && count < index) {
+        curr = curr->next;
+        count++;
+    }
+    return curr;
+}
+
+node_t* LL_get_middle(LL_t* list) {
+    if (list == NULL || list->head == NULL) return NULL;
+
+    int count = 0;
+    node_t* curr = list->head;
+    while (curr != NULL) {
+        curr = curr->next;
+        count++;
+    }
+
+    int mid = count / 2;
+    curr = list->head;
+    count = 0;
+    while (count < mid) {
+        curr = curr->next;
+        count++;
+    }
+
+    return curr;
+}
+
 void LL_free(LL_t* list) {
     if (list == NULL) return;
 

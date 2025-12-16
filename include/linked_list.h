@@ -32,6 +32,18 @@ size_t LL_get_size(LL_t* list);
 // Checks if two lists are equal
 bool LL_are_equal(LL_t* list1, LL_t* list2);
 
+// Reverses the list
+void LL_reverse(LL_t* list);
+
+// Maps each item in the list
+void LL_map(LL_t* list, int (*map)(int));
+
+// Gets the element at the given index (returns NULL on invalid input)
+node_t* LL_get_item(LL_t* list, int index);
+
+// Gets the rounded down middle element of the list
+node_t* LL_get_middle(LL_t* list);
+
 // Frees the entire linked list
 void LL_free(LL_t* list);
 

@@ -13,7 +13,7 @@ typedef struct LL {
 
 /* Construction / Destruction */
 
-// Creates a new Linked List
+// Creates a new empty Linked List
 LL_t* LL_create(void);
 // Frees all nodes but keeps the list
 void LL_clear(LL_t* list);
@@ -33,7 +33,7 @@ int LL_remove_from_tail(LL_t* list);
 
 /* Inspection / Queries */
 
-// Gets the size of the list (0 if null)
+// Gets the size of the list (0 if NULL)
 size_t LL_get_size(LL_t* list);
 // Checks if the list is empty
 bool LL_is_empty(LL_t* list);
@@ -41,7 +41,7 @@ bool LL_is_empty(LL_t* list);
 bool LL_are_equal(LL_t* list1, LL_t* list2);
 // Gets the index of the first occurrence of an item (-1 if not found)
 int LL_index_of(LL_t* list, int item);
-// Gets the element at the given index (NULL on invalid input)
+// Gets the element at the given index (NULL if out of bounds)
 node_t* LL_get_item(LL_t* list, size_t index);
 // Gets the middle element; for even-sized lists, returns the right-middle
 node_t* LL_get_middle(LL_t* list);

@@ -18,7 +18,6 @@ BUILD_DIR = build
 
 # Targets
 APP_TARGET = main
-TEST_TARGET = tests
 
 # Source files
 LIB_SRCS := $(wildcard $(SRC_DIR)/*.c)
@@ -53,23 +52,24 @@ $(BUILD_DIR)/%.test.o: $(TEST_DIR)/%.c | $(BUILD_DIR)
 $(BUILD_DIR)/$(APP_TARGET): $(LIB_OBJS) $(APP_OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# Link test program (exclude main app objects)
-$(BUILD_DIR)/$(TEST_TARGET): $(LIB_OBJS) $(TEST_OBJS)
+# Link each test separately
+$(BUILD_DIR)/%: $(LIB_OBJS) $(BUILD_DIR)/%.test.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -lcunit -o $@
 
-# Run tests
-test: $(BUILD_DIR)/$(TEST_TARGET)
-	./$(BUILD_DIR)/$(TEST_TARGET)
+# Build all test executables
+tests: $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/%,$(TEST_SRCS))
+	@echo "All test executables built in $(BUILD_DIR)/"
 
 # Clean build artifacts
 clean:
 	rm -rf $(BUILD_DIR)
 
-.PHONY: all test clean help
+.PHONY: all tests clean help
 
 # Info for users
 help:
 	@echo "Available targets:"
 	@echo "  make        - build the main program"
-	@echo "  make test   - build & run tests (requires CUnit)"
+	@echo "  make tests  - build all test executables"
+	@echo "  ./build/<testname> - run a specific test executable"
 	@echo "  make clean  - remove build artifacts"

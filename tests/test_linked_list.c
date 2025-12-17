@@ -2,21 +2,21 @@
 #include <CUnit/CUnit.h>
 #include "linked_list.h"
 
-// makes list with n items of value 0, 1, 2, ..., n - 1
-static LL_t* make_list_with_n(int n) {
-    LL_t* list = LL_create();
-    for (int i = 0; i < n; i++) {
-        LL_add_to_tail(list, i);
-    }
-    return list;
-}
-
 int init_suite(void) {
     return 0;
 }
 
 int clean_suite(void) {
     return 0;
+}
+
+// Helper that makes list with n items of value 0, 1, 2, ..., n - 1
+static LL_t* make_list_with_n(int n) {
+    LL_t* list = LL_create();
+    for (int i = 0; i < n; i++) {
+        LL_add_to_tail(list, i);
+    }
+    return list;
 }
 
 // Helper to assert the list matches an expected array

@@ -43,7 +43,7 @@ bool LL_are_equal(LL_t* list1, LL_t* list2);
 int LL_index_of(LL_t* list, int item);
 // Gets the element at the given index (NULL on invalid input)
 node_t* LL_get_item(LL_t* list, size_t index);
-// Gets the rounded down middle element of the list
+// Gets the middle element; for even-sized lists, returns the right-middle
 node_t* LL_get_middle(LL_t* list);
 
 /* Transformations */

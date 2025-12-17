@@ -179,7 +179,7 @@ node_t* LL_get_middle(LL_t* list) {
 }
 
 void LL_map(LL_t* list, int (*map)(int)) {
-    if (list == NULL) return;
+    if (list == NULL || map == NULL) return;
 
     node_t* curr = list->head;
     while (curr != NULL) {

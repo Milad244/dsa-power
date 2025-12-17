@@ -1,4 +1,4 @@
-#include "vla.h"
+#include "../include/vla.h"
 #include <stdlib.h>
 #include <stdbool.h>
 

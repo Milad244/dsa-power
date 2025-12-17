@@ -27,7 +27,7 @@ Ongoing. 2025-11-13 to present.
 
 ## Resources Used
 - C for implementing data structures and algorithms
-- CUnit for unit testing
+- Initially used CUnit for unit testing, later migrated to Unity for fully self-contained, portable test suites
 
 ## Usage
 1. Clone the repository: `git clone https://github.com/Milad244/dsa-power`

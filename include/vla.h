@@ -6,6 +6,8 @@
 #define VLA_MIN_CAPACITY 4
 
 // Generic variable-length array (VLA) structure
+// This VLA does NOT take ownership of stored elements.
+// The caller is responsible for managing element memory.
 typedef struct VLA {
     void** data;      // Pointer to array of elements
     size_t size;      // Current number of elements

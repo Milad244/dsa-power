@@ -128,12 +128,14 @@ void test_add_to_tail_non_empty(void) {
 
 void test_remove_from_head_null(void) {
     LL_t* null_list = NULL;
-    LL_remove_from_head(null_list);
+    int val = LL_remove_from_head(null_list);
+    TEST_ASSERT_EQUAL(-1, val);
 }
 
 void test_remove_from_head_empty(void) {
     LL_t* empty = make_list_with_n(0);
-    LL_remove_from_head(empty);
+    int val = LL_remove_from_head(empty);
+    TEST_ASSERT_EQUAL(-1, val);
 
     int expected[] = {};
     assert_list_equals(empty, expected, 0);
@@ -143,7 +145,8 @@ void test_remove_from_head_empty(void) {
 
 void test_remove_from_head_single(void) {
     LL_t* list = make_list_with_n(1);
-    LL_remove_from_head(list);
+    int val = LL_remove_from_head(list);
+    TEST_ASSERT_EQUAL(0, val);
 
     TEST_ASSERT_NULL(list->head);
     TEST_ASSERT_NULL(list->tail);
@@ -153,7 +156,8 @@ void test_remove_from_head_single(void) {
 
 void test_remove_from_head_multiple(void) {
     LL_t* list = make_list_with_n(8);
-    LL_remove_from_head(list);
+    int val = LL_remove_from_head(list);
+    TEST_ASSERT_EQUAL(0, val);
 
     int expected[] = {1, 2, 3, 4, 5, 6, 7};
     assert_list_equals(list, expected, 7);
@@ -165,12 +169,14 @@ void test_remove_from_head_multiple(void) {
 
 void test_remove_from_tail_null(void) {
     LL_t* null_list = NULL;
-    LL_remove_from_tail(null_list);
+    int val = LL_remove_from_tail(null_list);
+    TEST_ASSERT_EQUAL(-1, val);
 }
 
 void test_remove_from_tail_empty(void) {
     LL_t* empty = make_list_with_n(0);
-    LL_remove_from_tail(empty);
+    int val = LL_remove_from_tail(empty);
+    TEST_ASSERT_EQUAL(-1, val);
 
     int expected[] = {};
     assert_list_equals(empty, expected, 0);
@@ -180,7 +186,8 @@ void test_remove_from_tail_empty(void) {
 
 void test_remove_from_tail_single(void) {
     LL_t* list = make_list_with_n(1);
-    LL_remove_from_tail(list);
+    int val = LL_remove_from_tail(list);
+    TEST_ASSERT_EQUAL(0, val);
 
     TEST_ASSERT_NULL(list->head);
     TEST_ASSERT_NULL(list->tail);
@@ -190,7 +197,8 @@ void test_remove_from_tail_single(void) {
 
 void test_remove_from_tail_multiple(void) {
     LL_t* list = make_list_with_n(5);
-    LL_remove_from_tail(list);
+    int val = LL_remove_from_tail(list);
+    TEST_ASSERT_EQUAL(4, val);
 
     int expected[] = {0, 1, 2, 3};
     assert_list_equals(list, expected, 4);
@@ -228,7 +236,6 @@ void test_get_size_multiple(void) {
 void test_is_empty_null(void) {
     LL_t* null_list = NULL;
     TEST_ASSERT_TRUE(LL_is_empty(null_list));
-    LL_free(null_list);
 }
 
 void test_is_empty_empty(void) {
@@ -341,8 +348,9 @@ void test_index_of_single_not_found(void) {
 
 void test_index_of_multiple_found(void) {
     LL_t* list = make_list_with_n(5);
-    list->head->next->data = 99; // second element
-    TEST_ASSERT_EQUAL(1, LL_index_of(list, 99));
+    list->head->data = 99; // first element
+    list->head->next->next->data = 99; // third element
+    TEST_ASSERT_EQUAL(0, LL_index_of(list, 99)); // first occurrence
 
     LL_free(list);
 }
@@ -468,19 +476,19 @@ void test_map_empty(void) {
 
 void test_map_single(void) {
     LL_t* list = make_list_with_n(1);
+    list->head->data = 3;
     LL_map(list, square);
-    int expected[] = {0};
+    int expected[] = {9};
     assert_list_equals(list, expected, 1);
 
     LL_free(list);
 }
 
 void test_map_multiple(void) {
-    int n = 5;
-    LL_t* list = make_list_with_n(n);
+    LL_t* list = make_list_with_n(5);
     LL_map(list, square);
     int expected[] = {0, 1, 4, 9, 16};
-    assert_list_equals(list, expected, n);
+    assert_list_equals(list, expected, 5);
 
     LL_free(list);
 }
@@ -512,11 +520,10 @@ void test_reverse_single(void) {
 }
 
 void test_reverse_multiple(void) {
-    int n = 5;
-    LL_t* list = make_list_with_n(n);
+    LL_t* list = make_list_with_n(5);
     LL_reverse(list);
     int expected[] = {4, 3, 2, 1, 0};
-    assert_list_equals(list, expected, n);
+    assert_list_equals(list, expected, 5);
 
     LL_free(list);
 }

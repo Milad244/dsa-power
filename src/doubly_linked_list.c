@@ -10,6 +10,27 @@ DLL_t* DLL_create(void) {
     return list;
 }
 
+void DLL_clear(DLL_t* list) {
+    if (list == NULL) return;
+
+    dnode_t* node = list->head;
+    while (node != NULL) {
+        dnode_t* tmp = node;
+        node = node->next;
+        free(tmp);
+    }
+
+    list->head = NULL;
+    list->tail = NULL;
+}
+
+void DLL_free(DLL_t* list) {
+    if (list == NULL) return;
+    
+    DLL_clear(list);
+    free(list);
+}
+
 void DLL_add_to_front(DLL_t* list, int item) {
     if (list == NULL) return;
 
@@ -18,12 +39,11 @@ void DLL_add_to_front(DLL_t* list, int item) {
     node->data = item;
     node->prev = NULL;
 
-    // Handling empty list
-    if (list->head == NULL) {
+    if (list->head == NULL) { // Handling empty list
         list->head = node;
         list->tail = node;
         node->next = NULL;
-    } else { // Handling non-empty
+    } else { // Handling non-empty list
         node->next = list->head;
         list->head->prev = node;
         list->head = node;
@@ -38,12 +58,11 @@ void DLL_add_to_end(DLL_t* list, int item) {
     node->data = item;
     node->next = NULL;
 
-    // Handling empty list
-    if (list->tail == NULL) {
+    if (list->tail == NULL) { // Handling empty list
         list->head = node;
         list->tail = node;
         node->prev = NULL;
-    } else { // Handling non-empty
+    } else { // Handling non-empty list
         node->prev = list->tail;
         list->tail->next = node;
         list->tail = node;
@@ -55,8 +74,8 @@ int DLL_remove_from_front(DLL_t* list) {
     
     dnode_t* node = list->head;
     int data = node->data;
-    // Handling one element
-    if (list->head->next == NULL) {
+
+    if (list->head->next == NULL) { // Handling one element
         list->head = NULL;
         list->tail = NULL;
     } else {
@@ -73,8 +92,8 @@ int DLL_remove_from_end(DLL_t* list) {
     
     dnode_t* node = list->tail;
     int data = node->data;
-    // Handling one element
-    if (list->tail->prev == NULL) {
+    
+    if (list->tail->prev == NULL) { // Handling one element
         list->head = NULL;
         list->tail = NULL;
     } else {
@@ -84,17 +103,4 @@ int DLL_remove_from_end(DLL_t* list) {
 
     free(node);
     return data;
-}
-
-void DLL_free(DLL_t* list) {
-    if (list == NULL) return;
-
-    dnode_t* node = list->head;
-    while (node != NULL) {
-        dnode_t* tmp = node;
-        node = node->next;
-        free(tmp);
-    }
-    
-    free(list);
 }

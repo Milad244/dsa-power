@@ -23,6 +23,8 @@ void VLA_clear(VLA_t* vla) {
 }
 
 void VLA_free(VLA_t* vla) {
+    if (vla == NULL) return;
+    
     VLA_clear(vla);
     free(vla);
 }

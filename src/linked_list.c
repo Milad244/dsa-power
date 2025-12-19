@@ -25,6 +25,8 @@ void LL_clear(LL_t* list) {
 }
 
 void LL_free(LL_t* list) {
+    if (list == NULL) return;
+    
     LL_clear(list);
     free(list);
 }

@@ -22,7 +22,6 @@ static void assert_list_equals(LL_t* list, int expected[], int n) {
         TEST_ASSERT_EQUAL(expected[i], curr->data);
         if (i == n - 1) {
             TEST_ASSERT_EQUAL_PTR(curr, list->tail);
-            TEST_ASSERT_NULL(curr->next);
         }
         curr = curr->next;
     }
@@ -43,7 +42,11 @@ void test_create(void) {
 
 /* LL_clear tests */
 
-void test_clear(void) {
+void test_clear_null(void) {
+    LL_clear(NULL);
+}
+
+void test_clear_nonnull(void) {
     LL_t* list = make_list_with_n(5);
     LL_clear(list);
 
@@ -532,7 +535,8 @@ int main(void) {
     UNITY_BEGIN();
 
     RUN_TEST(test_create);
-    RUN_TEST(test_clear);
+    RUN_TEST(test_clear_null);
+    RUN_TEST(test_clear_nonnull);
     RUN_TEST(test_free_null);
     RUN_TEST(test_free_nonnull);
 

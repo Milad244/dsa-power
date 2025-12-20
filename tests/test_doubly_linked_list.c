@@ -5,7 +5,7 @@ void setUp(void) {}
 void tearDown(void) {}
 
 // Helper that makes list with n items of value 0, 1, 2, ..., n - 1
-DLL_t* make_list_with_n(int n) {
+static DLL_t* make_list_with_n(int n) {
     DLL_t* list = DLL_create();
     for (int i = 0; i < n; i++) {
         DLL_add_to_end(list, i);
@@ -14,7 +14,7 @@ DLL_t* make_list_with_n(int n) {
 }
 
 // Helper to assert the list matches an expected array
-void assert_list_equals(DLL_t* list, int expected[], int n) {
+static void assert_list_equals(DLL_t* list, int expected[], int n) {
     TEST_ASSERT_NOT_NULL(list);
     dnode_t* curr = list->head;
     for (int i = 0; i < n; i++) {

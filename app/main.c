@@ -38,9 +38,9 @@ int main() {
     // Queue
     // ----------------------------
     queue_t* q = queue_create();
-    enqueue(q, 100);
-    enqueue(q, 200);
-    printf("Dequeued from queue: %d\n", dequeue(q));
+    queue_enqueue(q, 100);
+    queue_enqueue(q, 200);
+    printf("Dequeued from queue: %d\n", queue_dequeue(q));
     printf("Queue empty? %s\n", queue_is_empty(q) ? "Yes" : "No");
 
     // ----------------------------

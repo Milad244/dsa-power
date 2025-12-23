@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include "../include/linked_list.h"
+#include "linked_list.h"
 
 // Queue definition (using linked list with head and tail)
 typedef struct Queue {

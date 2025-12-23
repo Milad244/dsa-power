@@ -23,7 +23,6 @@ void queue_clear(queue_t* q) {
 void queue_free(queue_t* q) {
     if (q == NULL) return;
     
-    queue_clear(q);
     LL_free(q->list);
     free(q);
 }
@@ -43,8 +42,9 @@ size_t queue_size(const queue_t* q) {
     if (q == NULL) return 0;
     return LL_get_size(q->list);
     /* IMPORTANT: The following is how it is done if implementation is abstracted away (so for assignments/exams)
-    size_t size = 0; // Will create tmp q for putting elements back
-    queue_t* tmp = queue_create(); // If fails then is undefined
+    if (q == NULL) return 0;
+    size_t size = 0;
+    queue_t* tmp = queue_create(); // Will create tmp q for putting elements back
     while (queue_is_empty(q) == false) { // While q is not empty fill tmp, empty q, and increment size
         queue_enqueue(tmp, queue_dequeue(q));
         size++;
@@ -67,19 +67,21 @@ bool queue_equal(const queue_t* q1, const queue_t* q2) {
     if (q1 == NULL || q2 == NULL) return false;
     return LL_are_equal(q1->list, q2->list);
     /* IMPORTANT: The following is how it is done if implementation is abstracted away (so for assignments/exams)
+    if (q1 == q2) return true;
+    if (q1 == NULL || q2 == NULL) return false;
     bool is_equal = true;
     // Will creates two tmps because if they differ then putting them back together requires separate queues
     queue_t* tmp1 = queue_create(); 
     queue_t* tmp2 = queue_create(); 
     while(queue_is_empty(q1) == false && queue_is_empty(q2) == false) {
-    int val1 = queue_dequeue(q1);
-    int val2 = queue_dequeue(q2);
-    queue_enqueue(tmp1, val1);
-    queue_enqueue(tmp2, val2);
-    if (val1 != val2) {
-        is_equal = false;
-        break;
-    }
+        int val1 = queue_dequeue(q1);
+        int val2 = queue_dequeue(q2);
+        queue_enqueue(tmp1, val1);
+        queue_enqueue(tmp2, val2);
+        if (val1 != val2) {
+            is_equal = false;
+            break;
+        }
     }
 
     if (queue_is_empty(q1) != queue_is_empty(q2)) is_equal = false; // If one runs out first then not equal

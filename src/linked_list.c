@@ -1,5 +1,6 @@
 #include "../include/linked_list.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 LL_t* LL_create(void) {
     LL_t* list = (LL_t*) malloc(sizeof(LL_t));
@@ -99,7 +100,7 @@ int LL_remove_from_tail(LL_t* list) {
     return data;
 }
 
-size_t LL_get_size(LL_t* list) {
+size_t LL_get_size(const LL_t* list) {
     if (list == NULL) return 0;
 
     size_t size = 0;
@@ -112,11 +113,11 @@ size_t LL_get_size(LL_t* list) {
     return size;
 }
 
-bool LL_is_empty(LL_t* list) {
+bool LL_is_empty(const LL_t* list) {
     return list == NULL || list->head == NULL;
 }
 
-bool LL_are_equal(LL_t* list1, LL_t* list2) {
+bool LL_are_equal(const LL_t* list1, const LL_t* list2) {
     if (list1 == list2) return true;
     if (list1 == NULL || list2 == NULL) return false;
 
@@ -132,7 +133,7 @@ bool LL_are_equal(LL_t* list1, LL_t* list2) {
     return true; // both empty
 }
 
-int LL_index_of(LL_t* list, int item) {
+int LL_index_of(const LL_t* list, int item) {
     if (list == NULL) return -1;
 
     size_t index = 0;
@@ -147,7 +148,7 @@ int LL_index_of(LL_t* list, int item) {
     return -1;
 }
 
-node_t* LL_get_item(LL_t* list, size_t index) {
+node_t* LL_get_item(const LL_t* list, size_t index) {
     if (list == NULL) return NULL;
 
     size_t count = 0;
@@ -159,7 +160,7 @@ node_t* LL_get_item(LL_t* list, size_t index) {
     return curr;
 }
 
-node_t* LL_get_middle(LL_t* list) {
+node_t* LL_get_middle(const LL_t* list) {
     if (list == NULL || list->head == NULL) return NULL;
 
     size_t count = 0;

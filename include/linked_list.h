@@ -34,17 +34,17 @@ int LL_remove_from_tail(LL_t* list);
 /* Inspection / Queries */
 
 // Gets the size of the list (0 if NULL)
-size_t LL_get_size(LL_t* list);
+size_t LL_get_size(const LL_t* list);
 // Checks if the list is empty
-bool LL_is_empty(LL_t* list);
+bool LL_is_empty(const LL_t* list);
 // Checks if two lists are equal
-bool LL_are_equal(LL_t* list1, LL_t* list2);
+bool LL_are_equal(const LL_t* list1, const LL_t* list2);
 // Gets the index of the first occurrence of an item (-1 if not found)
-int LL_index_of(LL_t* list, int item);
+int LL_index_of(const LL_t* list, int item);
 // Gets the element at the given index (NULL if out of bounds)
-node_t* LL_get_item(LL_t* list, size_t index);
+node_t* LL_get_item(const LL_t* list, size_t index);
 // Gets the middle element; for even-sized lists, returns the right-middle
-node_t* LL_get_middle(LL_t* list);
+node_t* LL_get_middle(const LL_t* list);
 
 /* Transformations */
 

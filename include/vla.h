@@ -37,15 +37,15 @@ void* VLA_pop_front(VLA_t* vla);
 /* Inspection / Queries */
 
 // Gets the current number of elements (0 if NULL)
-size_t VLA_size(VLA_t* vla);
+size_t VLA_size(const VLA_t* vla);
 // Checks if the VLA is empty
-bool VLA_is_empty(VLA_t* vla);
+bool VLA_is_empty(const VLA_t* vla);
 // Returns the last element without removing it (NULL if empty)
-void* VLA_peek_back(VLA_t* vla);
+void* VLA_peek_back(const VLA_t* vla);
 // Returns the first element without removing it (NULL if empty)
-void* VLA_peek_front(VLA_t* vla);
+void* VLA_peek_front(const VLA_t* vla);
 // Gets element at a given index (NULL if out of bounds)
-void* VLA_get(VLA_t* vla, size_t index);
+void* VLA_get(const VLA_t* vla, size_t index);
 // Sets element at a given index (no-op if out of bounds)
 void VLA_set(VLA_t* vla, size_t index, void* value);
 

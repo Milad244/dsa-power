@@ -85,29 +85,29 @@ void* VLA_pop_front(VLA_t* vla) {
     return res;
 }
 
-size_t VLA_size(VLA_t* vla) {
+size_t VLA_size(const VLA_t* vla) {
     if (vla == NULL) return 0;
     else return vla->size;
 }
 
-bool VLA_is_empty(VLA_t* vla) {
+bool VLA_is_empty(const VLA_t* vla) {
     if (vla == NULL || vla->size == 0) return true;
     else return false;
 }
 
-void* VLA_peek_back(VLA_t* vla) {
+void* VLA_peek_back(const VLA_t* vla) {
     if (vla == NULL || vla->size == 0) return NULL;
 
     return vla->data[vla->size - 1];
 }
 
-void* VLA_peek_front(VLA_t* vla) {
+void* VLA_peek_front(const VLA_t* vla) {
     if (vla == NULL || vla->size == 0) return NULL;
 
     return vla->data[0];
 }
 
-void* VLA_get(VLA_t* vla, size_t index) {
+void* VLA_get(const VLA_t* vla, size_t index) {
     if (vla == NULL || index >= vla->size) return NULL;
     
     return vla->data[index];

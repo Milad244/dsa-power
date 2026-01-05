@@ -3,18 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-// https://piazza.com/class/mc1b0dusddf1xw/post/39#
-
-// Utility
-
 void print_ar(const int* ar, int n) {
     for (int i = 0; i < n; i++) {
         printf("%d ", ar[i]);
     }
     printf("\n");
 }
-
-// Searching
 
 int linear_search(const int* ar, int n, int target) {
     for (int i = 0; i < n; i++) {
@@ -39,20 +33,20 @@ int binary_search(const int* ar, int n, int target) {
 }
 
 int rec_binary_search(const int* arr, int start, int end, int item) {
-    if (start>end) return -1;
+    if (start > end) return -1;
     
-    int mid = (start+end)/2;
+    int mid = (start + end) / 2;
     
     if (arr[mid] == item)
         return mid;
-    else if (arr[mid] > item)
-        return rec_binary_search(arr, start, mid - 1, item);
-    else 
-        return rec_binary_search(arr, mid + 1, end, item);
+    else if (arr[mid] > item) // item left of middle
+        return rec_binary_search(arr, start, mid - 1, item); // search left
+    else // item right of middle
+        return rec_binary_search(arr, mid + 1, end, item); // search right
 }
 
 int rec2_binary_search(const int* arr, int n, int item) {
-    // We send A+start, n=end-start+1
+    // We send A + start, n = end - start + 1
     if (n == 0) return -1;
     
     int mid = n / 2;
@@ -62,8 +56,7 @@ int rec2_binary_search(const int* arr, int n, int item) {
         
     if (arr[mid] > item) {
         return rec2_binary_search(arr, mid, item);
-    }
-    else {
+    } else {
         int i = rec2_binary_search(arr + mid + 1, n - mid - 1, item);
         if (i == -1)
             return -1;
@@ -71,8 +64,6 @@ int rec2_binary_search(const int* arr, int n, int item) {
             return mid + 1 + i;
     }
 }
-
-// Sorting
 
 void selection_sort(int* nums, int n) {
     // We find the smallest and swap it with i
@@ -91,6 +82,7 @@ void selection_sort(int* nums, int n) {
 }
 
 void bubble_sort(int* ar, int n) {
+    // We swap each time two values are out of order, the largest bubbles up
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (ar[j] > ar[j+1]) {
@@ -102,34 +94,27 @@ void bubble_sort(int* ar, int n) {
     }
 }
 
-void merge(int* ar, int n, int mid) {
+// Helper for merge_sort that merges a sorted [0, mid) and [mid, n) into a sorted [0, n)
+static void merge(int* ar, int n, int mid) {
     int* sorted = malloc(sizeof(int) * n);
     int i = 0, left = 0, right = mid;
     while(left < mid && right < n) { // While both sides have elements, we put the smallest of each iteration into sorted
         if (ar[left] <= ar[right]) {
-            sorted[i] = ar[left];
-            left++;
+            sorted[i++] = ar[left++];
         } else {
-            sorted[i] = ar[right];
-            right++;
+            sorted[i++] = ar[right++];
         }
-    i++;
-  }
+    }
   
     // If remaining side, it needs to be added
     while (left < mid) {
-        sorted[i] = ar[left];
-        left++;
-        i++;
+        sorted[i++] = ar[left++];
     } 
     
     while (right < n) {
-        sorted[i] = ar[right];
-        right++;
-        i++;
+        sorted[i++] = ar[right++];
     }
     
-  
     for (int k = 0; k < n; k++) { // Copying sorted to original
         ar[k] = sorted[k];
     }
@@ -147,13 +132,16 @@ void merge_sort(int* ar, int n) {
     merge(ar, n, mid);
 }
 
-void swap(int* a, int* b) {
+// Helper to swap the values of two variables
+static void swap(int* a, int* b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
-int partition(int* arr, int start, int end) {
+// Helper for end_quick_sort that uses the last element as a pivot and moves all elements less than, to the left
+// and all elements more than, to the right. It returns the index of the pivot once arr is rearranged properly
+static int end_partition(int* arr, int start, int end) {
     int pivot = arr[end];
     int i = start - 1;
     
@@ -168,11 +156,12 @@ int partition(int* arr, int start, int end) {
     return i + 1;
 }
 
-void quick_sort(int* arr, int start, int end) {
+void end_quick_sort(int* arr, int start, int end) {
+    // TODO
     if (start < end) {
-        int pivot = partition(arr, start, end);
-        quick_sort(arr, start, pivot - 1);
-        quick_sort(arr, pivot + 1, end);
+        int pivot = end_partition(arr, start, end);
+        end_quick_sort(arr, start, pivot - 1);
+        end_quick_sort(arr, pivot + 1, end);
     }
 }
 
@@ -180,13 +169,13 @@ int start_partition(int* arr, int start, int end) {
   int pivot = arr[start];
   int i = start + 1, j = end;
   
-  while(1) {
+  while(i <= j) {
     while (i <= end && arr[i] <= pivot) i++;
-    while (j >= start + 1 && arr[j] > pivot) j--;
+    while (arr[j] > pivot) j--;
     
-    if (i >= j) break;
-    
-    swap(&arr[i], &arr[j]);
+    if (i < j) {
+        swap(&arr[i], &arr[j]);
+    }
   }
   
   swap(&arr[start], &arr[j]);
@@ -202,6 +191,7 @@ void start_quick_sort(int* arr, int start, int end) {
 }
 
 void insertion_sort(int* arr, int n) {
+    // We assume sorted from 0...i-1 and then swap going backwards until curr is in correct spot
     int i, curr, j;
     for (i = 1; i < n; i++) {
         curr = arr[i];
@@ -209,7 +199,7 @@ void insertion_sort(int* arr, int n) {
         
         while (j >= 0 && arr[j] > curr) {
             arr[j + 1] = arr[j];
-            j --;
+            j--;
         }
         arr[j + 1] = curr;
     }

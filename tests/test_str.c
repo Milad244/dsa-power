@@ -191,7 +191,6 @@ void test_reverse_multiple(void) {
     assert_str_equal(s, "dcba");
 }
 
-
 /* str_is_palindrome tests */
 
 void test_is_palindrome_null(void) {

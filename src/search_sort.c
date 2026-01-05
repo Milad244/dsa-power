@@ -157,28 +157,28 @@ static int end_partition(int* arr, int start, int end) {
 }
 
 void end_quick_sort(int* arr, int start, int end) {
-    // TODO
+    // Recursively sorts the sub-arrays from either side of the pivot point of the parition
     if (start < end) {
         int pivot = end_partition(arr, start, end);
         end_quick_sort(arr, start, pivot - 1);
         end_quick_sort(arr, pivot + 1, end);
     }
 }
-
+// Helper for start_quick_sort that uses the first element as a pivot
 int start_partition(int* arr, int start, int end) {
   int pivot = arr[start];
   int i = start + 1, j = end;
   
   while(i <= j) {
-    while (i <= end && arr[i] <= pivot) i++;
-    while (arr[j] > pivot) j--;
+    while (i <= end && arr[i] <= pivot) i++; // We start from the first element (after the pivot) until we see it's greater
+    while (arr[j] > pivot) j--; // We start from last element until we see it's smaller
     
-    if (i < j) {
+    if (i < j) { // We swap the bigger and smaller into the right place
         swap(&arr[i], &arr[j]);
     }
   }
   
-  swap(&arr[start], &arr[j]);
+  swap(&arr[start], &arr[j]); // We put pivot in the right place (so everything left is smaller and everything right is greater)
   return j;
 }
 

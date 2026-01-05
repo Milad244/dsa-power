@@ -119,6 +119,8 @@ static int expand_around_center(const char* s, int left, int right, int n) {
 }
 
 char* str_longest_substring_palindrome(const char* s) {
+    if (s == NULL) return NULL;
+    
     int n = str_len(s);
     if (n == 0) {
         char* res = (char*) malloc(sizeof(char));

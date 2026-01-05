@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include "../include/linked_list.h"
-#include "../include/doubly_linked_list.h"
-#include "../include/stack.h"
-#include "../include/queue.h"
-#include "../include/search_sort.h"
-#include "../include/binary_tree.h"
+#include "linked_list.h"
+#include "doubly_linked_list.h"
+#include "stack.h"
+#include "queue.h"
+#include "search_sort.h"
+#include "binary_tree.h"
 
 int main() {
     // ----------------------------

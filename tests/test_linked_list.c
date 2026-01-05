@@ -1,5 +1,5 @@
 #include "Unity/unity.h"
-#include "../include/linked_list.h"
+#include "linked_list.h"
 
 void setUp(void) {}
 void tearDown(void) {}

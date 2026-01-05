@@ -18,6 +18,7 @@ This project covers:
   - Binary Search Tree
 
 - **Algorithms:**
+  - String: Len, Cat, Cpy, Cmp, Upper, Lower, Substring, Reverse, Palindrome
   - Sorting: Selection, Bubble, Insertion, Merge, Quick
   - Searching: Linear, Binary
   - Additional utility algorithms included with each data structure, such as node_distance and traversal functions

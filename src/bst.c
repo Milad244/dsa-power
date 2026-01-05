@@ -1,5 +1,5 @@
-#include "../include/bst.h"
-#include "../include/binary_tree.h"
+#include "bst.h"
+#include "binary_tree.h"
 #include <stdlib.h>
 #include <stdio.h>
 

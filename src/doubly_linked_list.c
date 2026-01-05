@@ -1,4 +1,4 @@
-#include "../include/doubly_linked_list.h"
+#include "doubly_linked_list.h"
 #include <stdlib.h>
 
 DLL_t* DLL_create(void) {

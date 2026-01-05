@@ -1,5 +1,5 @@
 #include "Unity/unity.h"
-#include "../include/vla.h"
+#include "vla.h"
 
 void setUp(void) {}
 void tearDown(void) {}

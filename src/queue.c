@@ -1,5 +1,5 @@
-#include "../include/queue.h"
-#include "../include/linked_list.h"
+#include "queue.h"
+#include "linked_list.h"
 #include <stdlib.h>
 #include <stdbool.h>
 

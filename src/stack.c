@@ -1,5 +1,5 @@
-#include "../include/stack.h"
-#include "../include/linked_list.h"
+#include "stack.h"
+#include "linked_list.h"
 #include <stdlib.h>
 #include <stdbool.h>
 

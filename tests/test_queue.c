@@ -1,5 +1,5 @@
 #include "Unity/unity.h"
-#include "../include/queue.h"
+#include "queue.h"
 
 void setUp(void) {}
 void tearDown(void) {}

@@ -3,7 +3,12 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include "node.h"
+
+// Basic node for int data
+typedef struct node {
+    int data;
+    struct node* next;
+} node_t;
 
 // Linked list definition
 typedef struct LL {

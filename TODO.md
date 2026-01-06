@@ -2,8 +2,6 @@
 
 ## TODO
 - [ ] Make sure all get size or len functions return size_t and not int
-- [ ] Implement VLA and use it to make bfs and dfs
-- [ ] Separate node functions from BT (maybe)
 - [ ] Format all files the same
 - [ ] Add consts where needed
 - [ ] Make open source and make contribution file and tell about some that can have more implementations: (queue, stack, DLL, str)
@@ -16,3 +14,4 @@
 - [x] Add CUnit tests
 - [x] Add size method in LL
 - [x] Finish LL tests
+- [x] Implement VLA and use it to make bfs and dfs

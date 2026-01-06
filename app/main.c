@@ -46,15 +46,46 @@ int main() {
     // ----------------------------
     // Binary Tree
     // ----------------------------
+
     BinaryTree_t* tree = bt_create();
     BTNode_t* root = node_create(10);
     tree->root = root;
 
+    // Level 1
     BTNode_t* left = node_create(5);
     BTNode_t* right = node_create(15);
-
     node_insert_left(root, left);
     node_insert_right(root, right);
+
+    // Level 2
+    BTNode_t* left_left = node_create(3);
+    BTNode_t* left_right = node_create(7);
+    node_insert_left(left, left_left);
+    node_insert_right(left, left_right);
+
+    BTNode_t* right_left = node_create(12);
+    BTNode_t* right_right = node_create(18);
+    node_insert_left(right, right_left);
+    node_insert_right(right, right_right);
+
+    // Level 3
+    BTNode_t* left_left_left = node_create(1);
+    node_insert_left(left_left, left_left_left);
+
+    BTNode_t* right_right_right = node_create(20);
+    node_insert_right(right_right, right_right_right);
+
+/* Tree looks like:
+
+        10
+       /  \
+      5    15
+     / \   / \
+    3   7 12 18
+   /           \
+  1             20
+
+*/
 
     printf("Inorder traversal: ");
     node_inorder_traversal(tree->root);
@@ -66,6 +97,14 @@ int main() {
 
     printf("Postorder traversal: ");
     node_postorder_traversal(tree->root);
+    printf("\n");
+
+    printf("DFS (Preorder) traversal: ");
+    node_dfs_traversal(tree->root);
+    printf("\n");
+
+    printf("BFS traversal: ");
+    node_bfs_traversal(tree->root);
     printf("\n");
 
     // Free all structures

@@ -12,8 +12,8 @@ This project covers:
   - VLA (Variable-Length Array)
   - Singly Linked List
   - Doubly Linked List
-  - Stack
-  - Queue
+  - Stack (using Linked List) and Generic Stack (using VLA)
+  - Queue (using Linked List) and Generic Queue (using VLA)
   - Binary Tree
   - Binary Search Tree
 

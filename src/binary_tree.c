@@ -1,4 +1,6 @@
 #include "binary_tree.h"
+#include "gen_stack.h"
+#include "gen_queue.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -42,7 +44,7 @@ void node_preorder_traversal(BTNode_t* root) {
 }
 
 void node_postorder_traversal(BTNode_t* root) {
-    // left, right,root
+    // left, right, root
     // base case
     if (root == NULL) return;
     // Recursive step
@@ -51,14 +53,38 @@ void node_postorder_traversal(BTNode_t* root) {
     printf("%d ", root->data);
 }
 
-// TODO but need general stacks and queues
-
 void node_dfs_traversal(BTNode_t* root) {
-    
+    if (root == NULL) return;
+
+    gen_stack_t* s = gen_stack_create();
+    if (s == NULL) return;
+
+    gen_stack_push(s, root);
+    while (gen_stack_is_empty(s) == false) {
+        BTNode_t* node = (BTNode_t*) gen_stack_pop(s);
+        printf("%d ", node->data);
+        if (node->right != NULL) gen_stack_push(s, node->right);
+        if (node->left != NULL) gen_stack_push(s, node->left);
+    }
+
+    gen_stack_free(s);
 }
 
 void node_bfs_traversal(BTNode_t* root) {
+    if (root == NULL) return;
 
+    gen_queue_t* q = gen_queue_create();
+    if (q == NULL) return;
+
+    gen_queue_enqueue(q, root);
+    while (gen_queue_is_empty(q) == false) {
+        BTNode_t* node = (BTNode_t*) gen_queue_dequeue(q);
+        printf("%d ", node->data);
+        if (node->left != NULL) gen_queue_enqueue(q, node->left);
+        if (node->right != NULL) gen_queue_enqueue(q, node->right);
+    }
+
+    gen_queue_free(q);
 }
 
 void node_insert_left(BTNode_t* parent, BTNode_t* child) {

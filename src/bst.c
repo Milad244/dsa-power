@@ -11,19 +11,13 @@ BST_t* BST_create(void) {
     tree->size = 0;
     return tree;
 }
-/*
-void BST_insert(BST_t* tree, int item) {
+
+void BST_free(BST_t* tree) {
     if (tree == NULL) return;
-    BTNode_t* node = tree->root;
-    while (node != NULL) { // We use binary search method to find the right spot to insert
-        if (node->data == item) return; // We don't insert a duplicate
-        else if (node->data > item) node = node->left; // If item is less then it goes left subtree
-        else node = node->right; // If item is right then it goes right subtree
-    }
-    node = node_create(item);
-    tree->size++;
+    node_free_subtree(tree->root);
+    free(tree);
 }
-*/
+
 void BST_insert(BST_t* tree, int item) {
     if (tree == NULL) return;
 
@@ -38,15 +32,64 @@ void BST_insert(BST_t* tree, int item) {
     }
 
     BTNode_t* newNode = node_create(item);
+    if (newNode == NULL) return;
 
     if (parent == NULL) tree->root = newNode;   // empty tree
     else if (item < parent->data) parent->left = newNode;
     else parent->right = newNode;
-    // also make child point to parent
-
+    
+    if (parent != NULL) newNode->parent = parent;
     tree->size++;
 }
 
+// Helper of BST_delete to handle deletion of no child case
+static void BST_delete_no_child(BST_t* tree, BTNode_t* to_delete) {
+    BTNode_t* parent = to_delete->parent;
+        if (parent == NULL) {
+            tree->root = NULL;
+        } else {
+            if (parent->left == to_delete) parent->left = NULL;
+            else parent->right = NULL;
+        }
+        free(to_delete);
+}
+
+// Helper of BST_delete to handle deletion of one child case
+static void BST_delete_single_child(BST_t* tree, BTNode_t* to_delete) {
+    BTNode_t* parent = to_delete->parent;
+    BTNode_t* child;
+    if (to_delete->left != NULL) child = to_delete->left;
+    else child = to_delete->right;
+    if (parent == NULL) { // Deleting root
+        tree->root = child;
+    } else {
+        if (parent->left == to_delete) parent->left = child;
+        else parent->right = child;
+    }
+    child->parent = parent;
+    free(to_delete);
+}
+
+void BST_delete(BST_t* tree, int item) {
+    if (tree == NULL) return;
+    BTNode_t* to_delete = BST_search(tree, item);
+    if (to_delete == NULL) return; // No item found to delete
+    
+    if (node_is_leaf(to_delete) == true) { // Has no children
+        BST_delete_no_child(tree, to_delete);
+    } else if ((to_delete->left != NULL && to_delete->right == NULL) ||
+        (to_delete->right != NULL && to_delete->left == NULL)) { // Has single child
+        BST_delete_single_child(tree, to_delete);
+    } else { // Has two children
+        // We need to find the successor of to_delete, swap them, and delete that one because it will have < 2 children
+        BTNode_t* successor = node_next_inorder(to_delete);
+        int successor_value = successor->data;
+        BST_delete(tree, successor_value);
+        tree->size++; // To offset the deletion size change from our recursive call
+        to_delete->data = successor_value;
+    }
+    tree->size--;
+}
 
 BTNode_t* BST_search(BST_t* tree, int item) {
     if (tree == NULL) return NULL;
@@ -83,55 +126,36 @@ int BST_find_max(BTNode_t* root) {
     return prev->data;
 }
 
-static void BST_delete_no_child(BTNode_t* to_delete) {
-    BTNode_t* parent = to_delete->parent;
-        if (parent != NULL) { // Need to update parent before deleting
-            if (parent->left == to_delete) parent->left = NULL;
-            else parent->right = NULL;
-        }
-        free(to_delete);
-}
-
-static void BST_delete_single_child(BST_t* tree, BTNode_t* to_delete) {
-    BTNode_t* parent = to_delete->parent;
-    BTNode_t* child;
-    if (to_delete->left != NULL) child = to_delete->left;
-    else child = to_delete->right;
-    if (parent == NULL) { // Deleting root
-        tree->root = child;
-    } else {
-        if (parent->left == to_delete) parent->left = child;
-        else parent->right = child;
-    }
-    free(to_delete);
-}
-
-void BST_delete(BST_t* tree, int item) {
-    if (tree == NULL) return;
-    BTNode_t* to_delete = BST_search(tree, item);
-    if (to_delete == NULL) return; // No item found to delete
-    
-    if (node_is_leaf(to_delete) == true) { // Has no children
-        BST_delete_no_child(to_delete);
-    } else if ((to_delete->left != NULL && to_delete->right == NULL) ||
-        (to_delete->right != NULL && to_delete->left == NULL)) { // Has single child
-        BST_delete_single_child(tree, to_delete);
-    } else { // Has two children
-        // We need to find the successor of to_delete, swap them, and delete that one because it will have < 2 children
-        BTNode_t* successor = node_next_inorder(to_delete);
-        int successor_value = successor->data;
-        BST_delete(tree, successor_value);
-        to_delete->data = successor_value;
-    }
-    tree->size--;
-}
-
 int BST_size(BST_t* tree) {
     if (tree == NULL) return 0;
     return tree->size;
 }
 
-// Helper function to recursively fill the array
+// Helper function for node_is_BST to check if BST is valid. Assumes every value is unique
+static bool is_BST_using_prev(BTNode_t* root, int* prev, bool* first) {
+  if (root == NULL) return true;
+
+  // Inorder traversal while keeping track of prev
+  if (is_BST_using_prev(root->left, prev, first) == false) return false;
+
+  if (*first == true) { 
+    *first = false; // No longer first
+  } else {
+    if (root->data <= *prev) return false; // Check that current element is not smaller or equal to prev
+  }
+  (*prev) = root->data; // Updating prev
+
+  return is_BST_using_prev(root->right, prev, first);
+}
+
+bool node_is_BST(BTNode_t* root) {
+  if (root == NULL) return false;
+  int prev = 0;
+  bool first = true;
+  return is_BST_using_prev(root, &prev, &first);
+}
+
+// Helper function for BST_to_array to recursively fill the array
 static void fill_inorder(BTNode_t* root, int* arr, int* index) {
   // base case
   if (root == NULL) return;
@@ -154,7 +178,7 @@ int* BST_to_array(BST_t* bst) {
   return res;
 }
 
-// Helper function to reconstruct BST from a sorted array
+// Helper function for BST_from_preorder to reconstruct BST from a sorted array
 static BTNode_t* reconstruct_BST_from_preorder(int* preorder, int start, int end) {
   if (start > end) return NULL;
 
@@ -186,34 +210,4 @@ BST_t* BST_from_preorder(int* preorder, int n) {
     res->root = reconstruct_BST_from_preorder(preorder, 0, n - 1);
     res->size = n; // Size of BST will be n
     return res;
-}
-
-// Helper function to check if BST is valid. Assumes every value is unique
-static bool is_BST_using_prev(BTNode_t* root, int* prev, bool* first) {
-  if (root == NULL) return true;
-
-  // Inorder traversal while keeping track of prev
-  if (is_BST_using_prev(root->left, prev, first) == false) return false;
-
-  if (*first == true) { 
-    *first = false; // No longer first
-  } else {
-    if (root->data <= *prev) return false; // Check that current element is not smaller or equal to prev
-  }
-  (*prev) = root->data; // Updating prev
-
-  return is_BST_using_prev(root->right, prev, first);
-}
-
-bool is_BST(BTNode_t* root) {
-  if (root == NULL) return false;
-  int prev = 0;
-  bool first = true;
-  return is_BST_using_prev(root, &prev, &first);
-}
-
-void BST_free(BST_t* tree) {
-    if (tree == NULL) return;
-    node_free_subtree(tree->root);
-    free(tree);
 }

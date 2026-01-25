@@ -23,11 +23,35 @@ BTNode_t* node_create(int item) {
     return node;
 }
 
+void node_free_subtree(BTNode_t* root) {
+    if (root == NULL) return;
+    node_free_subtree(root->left);
+    node_free_subtree(root->right);
+    free(root);
+}
+
+void bt_free(BinaryTree_t* tree) {
+    if (tree == NULL) return;
+    node_free_subtree(tree->root);
+    free(tree);
+}
+
+void node_insert_left(BTNode_t* parent, BTNode_t* child) {
+    if (parent == NULL || child == NULL) return;
+    parent->left = child;
+    child->parent = parent;
+}
+
+void node_insert_right(BTNode_t* parent, BTNode_t* child) {
+    if (parent == NULL || child == NULL) return;
+    parent->right = child;
+    child->parent = parent;
+}
+
 void node_inorder_traversal(BTNode_t* root) {
     // left, root, right
-    // base case
     if (root == NULL) return;
-    // Recursive step
+
     node_inorder_traversal(root->left);
     printf("%d ", root->data);
     node_inorder_traversal(root->right);
@@ -35,9 +59,8 @@ void node_inorder_traversal(BTNode_t* root) {
 
 void node_preorder_traversal(BTNode_t* root) {
     // root, left, right
-    // base case
     if (root == NULL) return;
-    // Recursive step
+
     printf("%d ", root->data);
     node_preorder_traversal(root->left);
     node_preorder_traversal(root->right);
@@ -45,9 +68,8 @@ void node_preorder_traversal(BTNode_t* root) {
 
 void node_postorder_traversal(BTNode_t* root) {
     // left, right, root
-    // base case
     if (root == NULL) return;
-    // Recursive step
+
     node_postorder_traversal(root->left);
     node_postorder_traversal(root->right);
     printf("%d ", root->data);
@@ -87,18 +109,6 @@ void node_bfs_traversal(BTNode_t* root) {
     gen_queue_free(q);
 }
 
-void node_insert_left(BTNode_t* parent, BTNode_t* child) {
-    if (parent == NULL || child == NULL) return;
-    parent->left = child;
-    child->parent = parent;
-}
-
-void node_insert_right(BTNode_t* parent, BTNode_t* child) {
-    if (parent == NULL || child == NULL) return;
-    parent->right = child;
-    child->parent = parent;
-}
-
 bool bt_is_empty(BinaryTree_t* tree) {
     return tree == NULL || tree->root == NULL;
 }
@@ -109,7 +119,7 @@ bool node_is_leaf(BTNode_t* node) {
 }
 
 bool node_are_equal(BTNode_t* root1, BTNode_t* root2) {
-    // Base cases
+    // Base case
     if (root1 == NULL && root2 == NULL) return true;
     if (root1 == NULL || root2 == NULL) return false;
     if (root1->data != root2->data) return false;
@@ -127,13 +137,11 @@ int node_height(BTNode_t* root) {
     return 1 + max(node_height(root->left), node_height(root->right));
 }
 
-// returns 0 if NULL
 int node_count(BTNode_t* root) {
     if (root == NULL) return 0;
     return 1 + node_count(root->left) + node_count(root->right);
 }
 
-// returns 0 if NULL and count starts at 0 (so node_depth(root) = 0)
 int node_depth(BTNode_t* node) {
     if (node == NULL) return 0;
     int depth = 0;
@@ -152,7 +160,6 @@ int node_leaves_count(BTNode_t* root) {
     return node_leaves_count(root->left) + node_leaves_count(root->right); // Not leaf so check children
 }
 
-// Returns true if node is a descendant of ancestor
 bool node_is_descendant(BTNode_t* ancestor, BTNode_t* node) {
     if (ancestor == NULL || node == NULL) return false;
     
@@ -165,7 +172,6 @@ bool node_is_descendant(BTNode_t* ancestor, BTNode_t* node) {
     return false;
 }
 
-// Returns true if potential_ancestor is an ancestor of node
 bool node_is_ancestor(BTNode_t* node, BTNode_t* potential_ancestor) {
     return node_is_descendant(potential_ancestor, node);
 }
@@ -182,18 +188,16 @@ BTNode_t* node_get_uncle(BTNode_t* node) {
     return node_get_sibling(node->parent);
 }
 
-BTNode_t* bt_search(BTNode_t* root, int target) {
+BTNode_t* node_search(BTNode_t* root, int target) {
     // Base case
     if (root == NULL) return NULL;
     if (root->data == target) return root;
     // Recursive step
-    BTNode_t* left = bt_search(root->left, target);
+    BTNode_t* left = node_search(root->left, target);
     if (left != NULL) return left;
-    else return bt_search(root->right, target);
+    else return node_search(root->right, target);
 }
 
-// Computes distance (number of edges) between two nodes
-// Returns -1 if nodes are not in the same tree
 int node_distance(BTNode_t* node1, BTNode_t* node2){
     if (node1 == NULL || node2 == NULL) return -1;
 
@@ -235,41 +239,6 @@ int node_distance(BTNode_t* node1, BTNode_t* node2){
     return dist;
 }
 
-/*
-BTNode_t* node_next_inorder(BTNode_t* node) {
-  BTNode_t* parent = node->parent;
-  if (parent == NULL) { // Root so we go right then left until null
-    if (node->right == NULL) return NULL; // nothing on the right so inorder is finished
-    node = node->right;
-    while(node->left != NULL) {
-      node = node->left;
-    }
-    return node;
-  }
-
-  if (node->right != NULL) { // Since not root, if has right child then right side next inorder
-    node = node->right;
-    // We need to go as left as possible
-    while (node->left != NULL) {
-      node = node->left;
-    }
-    return node;
-  }
-
-  // If no right children then we need to find the parent who's node is left and return it
-  while(parent != NULL) {
-    if (parent->left == node) { // Parent with left child found and returned
-      return parent;
-    }
-    // Othewise increment both
-    node = parent;
-    parent = parent->parent;
-  }
-  // Must be last element
-  return NULL;
-}
-*/
-// Doing better versions:
 BTNode_t* node_next_inorder(BTNode_t* node) {
     if (node == NULL) return NULL;
 
@@ -389,7 +358,9 @@ static BTNode_t* build_tree_from_post_in(int* postorder, int* post_index, int* i
     int node_index = in_start;
     while (node_index <= in_end && inorder[node_index] != root_value) node_index++;
     root->right = build_tree_from_post_in(postorder, post_index, inorder, node_index + 1, in_end);
+    if (root->right != NULL) root->right->parent = root;
     root->left = build_tree_from_post_in(postorder, post_index, inorder, in_start, node_index - 1);
+    if (root->left != NULL) root->left->parent = root;
 
     return root;
 }
@@ -400,17 +371,4 @@ BinaryTree_t* bt_reconstruct_from_post_in(int* postorder, int* inorder, int n) {
     BinaryTree_t* res = bt_create();
     res->root = root;
     return res;
-}
-
-void node_free_subtree(BTNode_t* root) {
-    if (root == NULL) return;
-    node_free_subtree(root->left);
-    node_free_subtree(root->right);
-    free(root);
-}
-
-void bt_free(BinaryTree_t* tree) {
-    if (tree == NULL) return;
-    node_free_subtree(tree->root);
-    free(tree);
 }

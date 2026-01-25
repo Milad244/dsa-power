@@ -1,10 +1,9 @@
 # DSA Power
 
 ## Description
-DSA Power is a collection of my own implementations of core data structures and algorithms in C.
-I developed this project to practice and deeply understand fundamental concepts in data structures and algorithms.
-I also added rigorous unit testing to gain experience creating DRY tests and to overcome my mental block with testing large programs.
-Most importantly, this project is designed for first-year CS students who want a beginner-friendly and readable program containing all the data structures they will learn. If you are learning DSA, I highly recommend trying to implement the functions yourself and using my test cases to help verify your solutions.
+DSA Power is my collection of implementations of core data structures and algorithms in C.
+By providing readable code and fully tested functions, this project serves as a clear and beginner-friendly reference for CS students.
+If you are learning DSA, you can try implementing the functions yourself and use the test cases to check your work.  
 
 This project covers:
 
@@ -27,8 +26,8 @@ This project covers:
 Ongoing. 2025-11-13 to present.
 
 ## Resources Used
-- C for implementing data structures and algorithms
-- Initially used CUnit for unit testing, later migrated to Unity for fully self-contained, portable test suites
+- `C` for implementing data structures and algorithms
+- Initially used `CUnit` for unit testing, later migrated to `Unity`
 
 ## Usage
 1. Clone the repository: `git clone https://github.com/Milad244/dsa-power`
@@ -39,5 +38,8 @@ Ongoing. 2025-11-13 to present.
 6. Run the tests: `./build/test_<name>`
 7. Clean build artifacts: `make clean`
 
+## Contributing
+For those who want to contribute or extend the project with additional functions, see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## Acknowledgments
-- Some build setup, tooling ideas, and boilerplate tests were assisted by AI.
+Some build setup, tooling ideas, and boilerplate tests were assisted by AI.
